@@ -162,6 +162,7 @@ cpdefine("inline:com-chilipeppr-workspace-Ox-CNC-Grbl", ["chilipeppr_ready"], fu
             });
             
             this.loadTemplateWidget();
+            this.loadLuaEditorWidget();
             
             // Create our workspace upper right corner triangle menu
             this.loadWorkspaceMenu();
@@ -297,6 +298,28 @@ cpdefine("inline:com-chilipeppr-workspace-Ox-CNC-Grbl", ["chilipeppr_ready"], fu
             );
         },
         /**
+         * Load the Lua Editor widget via chilipeppr.load()
+         */
+        loadLuaEditorWidget: function(callback) {
+            var that = this;
+            chilipeppr.load(
+              "#com-chilipeppr-widget-luaeditor-instance",
+              "http://raw.githubusercontent.com/chilipeppr/widget-luaeditor/master/auto-generated-widget.html",
+              function() {
+                // Callback after widget loaded into #myDivWidgetLuaeditor
+                // Now use require.js to get reference to instantiated widget
+                cprequire(
+                  ["inline:com-chilipeppr-widget-luaeditor"], // the id you gave your widget
+                  function(myObjWidgetLuaeditor) {
+                    // Callback that is passed reference to the newly loaded widget
+                    console.log("Widget / Lua Editor just got loaded.", myObjWidgetLuaeditor);
+                    myObjWidgetLuaeditor.init();
+                  }
+                );
+              }
+            );
+        },
+        /**
          * Load the workspace menu and show the pubsubviewer and fork links using
          * our pubsubviewer widget that makes those links for us.
          */
@@ -384,8 +407,8 @@ cpdefine("inline:com-chilipeppr-workspace-Ox-CNC-Grbl", ["chilipeppr_ready"], fu
 
                 <!-- Center Column -->
                 <div class="col-md-5 col-pad10">
-                    <div id="mywidget2-instance">
-                        <p class="Ox-CNC-Grbl" style="min-height:200px;">Widget 2 goes here</p>
+                    <div id="com-chilipeppr-widget-luaeditor-instance">
+                        <p class="Ox-CNC-Grbl" style="min-height:200px;">Lua Editor goes here</p>
                     </div>
                 </div>
 
